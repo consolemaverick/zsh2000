@@ -61,7 +61,7 @@ prompt_git() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment yellow black '%~'
+  prompt_segment "038" white '%~'
 }
 
 # Status:
@@ -83,7 +83,7 @@ prompt_time() {
 }
 
 prompt_rvm() {
-  prompt_segment yellow black `rvm-prompt` $SEGMENT_SEPARATOR_RIGHT
+  prompt_segment "239" white `rvm-prompt` $SEGMENT_SEPARATOR_RIGHT
 }
 
 ## Main prompt
@@ -99,7 +99,7 @@ build_prompt() {
 build_rprompt() {
   prompt_rvm
   prompt_time 
-  prompt_end $SEGMENT_SEPARATOR_RIGHT
+  prompt_end
 }
 
 PROMPT='%{%f%b%k%}$(build_prompt) '
