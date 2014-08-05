@@ -53,13 +53,15 @@ prompt_git() {
     else
       prompt_segment green white
     fi
-    echo -n "${ref/refs\/heads\//⭠ }$dirty"
+    #echo -n "${ref/refs\/heads\//⭠ }$dirty"
+    echo -n "${ref/refs\/heads\//}$dirty"
+    
   fi
 }
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment blue black '%~'
+  prompt_segment yellow black '%~'
 }
 
 # Status:
