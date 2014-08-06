@@ -3,6 +3,8 @@ ZSH2000
 
 ![alt tag](https://raw.githubusercontent.com/maverick2000/zsh2000/master/demo.png)
 
+![alt tag](https://raw.githubusercontent.com/maverick2000/zsh2000/master/demo2.png)
+
 Powerline looking zsh theme with rvm prompt, git status and branch, current time, user, hostname, pwd, exit status, root and background job status.
 
 Influenced heavily by [agnoster's theme](https://gist.github.com/3712874) and [jeremyFreeAgent's theme](https://github.com/jeremyFreeAgent/oh-my-zsh-powerline-theme)
