@@ -2,6 +2,19 @@ CURRENT_BG='NONE'
 SEGMENT_SEPARATOR_RIGHT='\ue0b2'
 SEGMENT_SEPARATOR_LEFT='\ue0b0'
 
+ZSH_THEME_GIT_PROMPT_UNTRACKED=" ✭"
+ZSH_THEME_GIT_PROMPT_DIRTY=''
+ZSH_THEME_GIT_PROMPT_STASHED=' ⚑'
+ZSH_THEME_GIT_PROMPT_DIVERGED=' ⚡'
+ZSH_THEME_GIT_PROMPT_ADDED=" ✚"
+ZSH_THEME_GIT_PROMPT_MODIFIED=" ✹"
+ZSH_THEME_GIT_PROMPT_DELETED=" ✖"
+ZSH_THEME_GIT_PROMPT_RENAMED=" ➜"
+ZSH_THEME_GIT_PROMPT_UNMERGED=" ═"
+ZSH_THEME_GIT_PROMPT_AHEAD=' ⬆'
+ZSH_THEME_GIT_PROMPT_BEHIND=' ⬇'
+ZSH_THEME_GIT_PROMPT_DIRTY=' ±'
+
 prompt_segment() {
   local bg fg
   [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
@@ -45,7 +58,6 @@ prompt_user_hostname() {
 prompt_git() {
   local ref dirty
   if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
-    ZSH_THEME_GIT_PROMPT_DIRTY='±'
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
     if [[ -n $dirty ]]; then
@@ -53,7 +65,11 @@ prompt_git() {
     else
       prompt_segment green black
     fi
-    echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty"
+    if [ "$ZSH_2000_DISABLE_GIT_STATUS" != "true" ];then
+      echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty"$(git_prompt_status)
+    else
+      echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty"
+    fi
   fi
 }
 
@@ -68,7 +84,7 @@ prompt_dir() {
 prompt_status() {
   local symbols
   symbols=()
-  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}✘"
+  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{yellow}%}✖"
   [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡"
   [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
 
@@ -83,9 +99,8 @@ prompt_rvm() {
   prompt_segment_right "240" white "`rvm-prompt` "
 }
 
-## Main prompt
 build_prompt() {
-  if [ "$ZSH_2000_ENABLE_STATUS" = 'true' ];then
+  if [ "$ZSH_2000_DISABLE_STATUS" != 'true' ];then
     RETVAL=$?
     prompt_status
   fi
