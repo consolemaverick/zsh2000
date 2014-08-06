@@ -34,7 +34,7 @@ prompt_end() {
   CURRENT_BG=''
 }
 
-prompt_context() {
+prompt_user_hostname() {
   local user=`whoami`
 
   if [[ "$user" != "$ZSH_2000_DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
@@ -85,9 +85,11 @@ prompt_rvm() {
 
 ## Main prompt
 build_prompt() {
-  #RETVAL=$?
-  #prompt_status
-  prompt_context
+  if [ "$ZSH_2000_ENABLE_STATUS" = 'true' ];then
+    RETVAL=$?
+    prompt_status
+  fi
+  prompt_user_hostname
   prompt_dir
   prompt_git
   prompt_end

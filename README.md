@@ -22,3 +22,6 @@ In order to disable user@hostname add the following to your ~/.zshrc
 
     export ZSH_2000_DEFAULT_USER='YOUR_USER_NAME'
 
+In order to see the exist status of your last command or if you are root add the following to your ~/.zshrc
+
+    export ZSH_2000_DISABLE_RIGHT_PROMPT='true'
