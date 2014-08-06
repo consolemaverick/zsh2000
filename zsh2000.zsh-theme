@@ -96,7 +96,11 @@ prompt_time() {
 }
 
 prompt_rvm() {
-  prompt_segment_right "240" white "`rvm-prompt` "
+  local rvm_prompt
+  rvm_prompt=`rvm-prompt`
+  if [ "$rvm_prompt" != "" ]; then
+    prompt_segment_right "240" white "$rvm_prompt "
+  fi
 }
 
 build_prompt() {
