@@ -54,7 +54,7 @@ prompt_git() {
       prompt_segment green black
     fi
     #echo -n "${ref/refs\/heads\//⭠ }$dirty"
-    echo -n "${ref/refs\/heads\//}$dirty"
+    echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty"
   fi
 }
 
