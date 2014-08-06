@@ -99,4 +99,6 @@ build_rprompt() {
 }
 
 PROMPT='%{%f%b%k%}$(build_prompt) '
-RPROMPT='%{%f%b%k%}$(build_rprompt)'
+if [ "$ZSH_2000_DISABLE_RIGHT_PROMPT" != 'true' ];then
+  RPROMPT='%{%f%b%k%}$(build_rprompt)'
+fi
