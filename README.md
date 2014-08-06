@@ -31,3 +31,7 @@ In order to toggle display of:
 add the following to your ~/.zshrc
 
     export ZSH_2000_DISABLE_STATUS='true'
+
+In order to toggle display of git status on top of plain git clean/dirty add the following to your ~/.zshrc
+
+    export ZSH_2000_DISABLE_GIT_STATUS='true'
