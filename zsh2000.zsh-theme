@@ -51,7 +51,7 @@ prompt_git() {
     if [[ -n $dirty ]]; then
       prompt_segment magenta black
     else
-      prompt_segment green white
+      prompt_segment green black
     fi
     #echo -n "${ref/refs\/heads\//⭠ }$dirty"
     echo -n "${ref/refs\/heads\//}$dirty"
@@ -61,7 +61,7 @@ prompt_git() {
 
 # Dir: current working directory
 prompt_dir() {
-  prompt_segment "028" white '%~'
+  prompt_segment blue white '%~'
 }
 
 # Status:
@@ -83,7 +83,7 @@ prompt_time() {
 }
 
 prompt_rvm() {
-  prompt_segment "239" white `rvm-prompt` $SEGMENT_SEPARATOR_RIGHT
+  prompt_segment "240" white `rvm-prompt` $SEGMENT_SEPARATOR_RIGHT
 }
 
 ## Main prompt
