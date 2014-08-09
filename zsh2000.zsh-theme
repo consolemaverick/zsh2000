@@ -115,7 +115,9 @@ build_prompt() {
 }
 
 build_rprompt() {
-  prompt_rvm
+  if [ "$ZSH_2000_DISABLE_RVM" != 'true' ];then
+    prompt_rvm
+  fi
   prompt_time
 }
 
