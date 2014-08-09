@@ -20,7 +20,7 @@ Influenced heavily by [agnoster's theme](https://gist.github.com/3712874) and [j
 
 ###Configuration###
 
-In order to disable the right hand side prompt add the following to your ~/.zshrc
+In order to disable the right hand side prompt entirely add the following to your ~/.zshrc
 
     export ZSH_2000_DISABLE_RIGHT_PROMPT='true'
 
@@ -28,7 +28,7 @@ In order to disable user@hostname add the following to your ~/.zshrc
 
     export ZSH_2000_DEFAULT_USER='YOUR_USER_NAME'
 
-In order to toggle display of:
+In order to disable display of:
 
 1. exit status of your last command
 2. whether or not you are root
@@ -38,6 +38,10 @@ add the following to your ~/.zshrc
 
     export ZSH_2000_DISABLE_STATUS='true'
 
-In order to toggle display of git status on top of plain git clean/dirty add the following to your ~/.zshrc
+In order to disable git status on top of plain git clean/dirty add the following to your ~/.zshrc
 
     export ZSH_2000_DISABLE_GIT_STATUS='true'
+
+In order to disable RVM prompt add the following to your ~/.zshrc
+
+    export ZSH_2000_DISABLE_RVM='true'
