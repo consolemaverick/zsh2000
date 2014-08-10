@@ -11,7 +11,8 @@ Influenced heavily by [agnoster's theme](https://gist.github.com/3712874) and [j
 
 ###Prerequisites###
 
-[Powerline-patched font](https://gist.github.com/1595572)
+Install your favorite version of
+[Powerline-patched fonts](https://github.com/Lokaltog/powerline-fonts)
 
 ###Installation###
 
