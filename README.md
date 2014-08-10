@@ -19,30 +19,38 @@ Install your favorite version of
     git clone https://github.com/maverick2000/zsh2000.git
     ln -s zsh2000.zsh-theme ~/.oh-my-zsh/themes/zsh2000.zsh-theme
 
+Modify ~/.zshrc setting
+
+    ZSH_THEME="zsh2000"
+
 ###Configuration###
 
-In order to disable the right hand side prompt entirely add the following to your ~/.zshrc
+Place these above this line in your ~/.zshrc:
+
+    ZSH_THEME="zsh2000"
+
+Disable the right hand side prompt entirely
 
     export ZSH_2000_DISABLE_RIGHT_PROMPT='true'
 
-In order to disable user@hostname add the following to your ~/.zshrc
+Disable user@hostname
 
     export ZSH_2000_DEFAULT_USER='YOUR_USER_NAME'
 
-In order to disable display of:
+Disable display of
 
 1. exit status of your last command
 2. whether or not you are root
-3. whether or not there are background jobs running 
+3. whether or not there are background jobs running
 
-add the following to your ~/.zshrc
+by adding
 
     export ZSH_2000_DISABLE_STATUS='true'
 
-In order to disable git status on top of plain git clean/dirty add the following to your ~/.zshrc
+Disable git status on top of plain git clean/dirty
 
     export ZSH_2000_DISABLE_GIT_STATUS='true'
 
-In order to disable RVM prompt add the following to your ~/.zshrc
+Disable RVM prompt
 
     export ZSH_2000_DISABLE_RVM='true'
