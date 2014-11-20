@@ -59,14 +59,14 @@ prompt_git() {
   local ref dirty
   if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
     dirty=$(parse_git_dirty)
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
+    ref=$(git symbolic-ref HEAD 2> /dev/null)
     if [[ -n $dirty ]]; then
       prompt_segment magenta black
     else
       prompt_segment green black
     fi
     if [ "$ZSH_2000_DISABLE_GIT_STATUS" != "true" ];then
-      echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty"$(git_prompt_status)
+      #echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty"$(git_prompt_status)
     else
       echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty"
     fi
