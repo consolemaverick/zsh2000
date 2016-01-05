@@ -3,7 +3,6 @@ SEGMENT_SEPARATOR_RIGHT='\ue0b2'
 SEGMENT_SEPARATOR_LEFT='\ue0b0'
 
 ZSH_THEME_GIT_PROMPT_UNTRACKED=" ✭"
-ZSH_THEME_GIT_PROMPT_DIRTY=''
 ZSH_THEME_GIT_PROMPT_STASHED=' ⚑'
 ZSH_THEME_GIT_PROMPT_DIVERGED=' ⚡'
 ZSH_THEME_GIT_PROMPT_ADDED=" ✚"
@@ -91,7 +90,7 @@ prompt_dir() {
 prompt_status() {
   local symbols
   symbols=()
-  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{yellow}%}✖"
+  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}✖"
   [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡"
   [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
 
