@@ -54,3 +54,7 @@ Disable git status on top of plain git clean/dirty
 Disable RVM prompt
 
     export ZSH_2000_DISABLE_RVM='true'
+
+Disable current system time
+
+    export ZSH_2000_DISABLE_TIME='true'
