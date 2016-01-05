@@ -54,3 +54,7 @@ Disable git status on top of plain git clean/dirty
 Disable RVM prompt
 
     export ZSH_2000_DISABLE_RVM='true'
+
+Move the git status prompt to the right side
+
+    export ZSH_2000_GIT_PROMPT_LEFT='false'
