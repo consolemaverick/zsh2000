@@ -172,7 +172,9 @@ function git_time_since_commit() {
 
 build_rprompt() {
   if [[ "$ZSH_2000_DISABLE_RIGHT_PROMPT" != 'true' ]];then
-    echo -n "$(git_time_since_commit)"
+    if [[ "$ZSH_2000_DISABLE_GIT_TIME" != 'true' ]];then
+        echo -n "$(git_time_since_commit)"
+    fi
     if [[ "$ZSH_2000_DISABLE_RVM" != 'true' ]];then
       prompt_rvm
     fi
