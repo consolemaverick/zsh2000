@@ -3,7 +3,6 @@ SEGMENT_SEPARATOR_RIGHT='\ue0b2'
 SEGMENT_SEPARATOR_LEFT='\ue0b0'
 
 ZSH_THEME_GIT_PROMPT_UNTRACKED=" ✭"
-ZSH_THEME_GIT_PROMPT_DIRTY=''
 ZSH_THEME_GIT_PROMPT_STASHED=' ⚑'
 ZSH_THEME_GIT_PROMPT_DIVERGED=' ⚡'
 ZSH_THEME_GIT_PROMPT_ADDED=" ✚"
@@ -61,14 +60,21 @@ prompt_git() {
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null)
     if [[ -n $dirty ]]; then
-      prompt_segment magenta black
+      if [[ "$ZSH_2000_GIT_PROMPT_LEFT" != 'false' ]];then
+        prompt_segment magenta black
+      else
+        prompt_segment_right magenta black
+      fi
     else
-      prompt_segment green black
+      if [[ "$ZSH_2000_GIT_PROMPT_LEFT" != 'false' ]];then
+        prompt_segment green black
+      else
+        prompt_segment_right green black
+      fi
     fi
-    if [ "$ZSH_2000_DISABLE_GIT_STATUS" != "true" ];then
-      #echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty"$(git_prompt_status)
-    else
-      echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty"
+    echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty "
+    if [[ "$ZSH_2000_DISABLE_GIT_STATUS" != "true" ]];then
+      echo -n "$(git_prompt_status)"
     fi
   fi
 }
@@ -84,7 +90,7 @@ prompt_dir() {
 prompt_status() {
   local symbols
   symbols=()
-  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{yellow}%}✖"
+  [[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}✖"
   [[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡"
   [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
 
@@ -98,19 +104,21 @@ prompt_time() {
 prompt_rvm() {
   local rvm_prompt
   rvm_prompt=`rvm-prompt`
-  if [ "$rvm_prompt" != "" ]; then
+  if [[ "$rvm_prompt" != "" ]]; then
     prompt_segment_right "240" white "$rvm_prompt "
   fi
 }
 
 build_prompt() {
-  if [ "$ZSH_2000_DISABLE_STATUS" != 'true' ];then
+  if [[ "$ZSH_2000_DISABLE_STATUS" != 'true' ]];then
     RETVAL=$?
     prompt_status
   fi
   prompt_user_hostname
   prompt_dir
-  prompt_git
+  if [[ "$ZSH_2000_GIT_PROMPT_LEFT" != 'false' ]];then
+    prompt_git
+  fi
   prompt_end
 }
 
@@ -118,7 +126,7 @@ ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT="%{$fg[green]%}"
 ZSH_THEME_GIT_TIME_SHORT_COMMIT_MEDIUM="%{$fg[yellow]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG="%{$fg[red]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg[cyan]%}"
- 
+
 #Customized git status, oh-my-zsh currently does not allow render dirty status before branch
 git_custom_status() {
   local cb=$(current_branch)
@@ -126,7 +134,7 @@ git_custom_status() {
     echo "$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_PREFIX$(current_branch)$ZSH_THEME_GIT_PROMPT_SUFFIX"
   fi
 }
- 
+
 # Determine the time since last commit. If branch is clean,
 # use a neutral color, otherwise colors will vary according to time.
 function git_time_since_commit() {
@@ -137,16 +145,16 @@ function git_time_since_commit() {
             last_commit=`git log --pretty=format:'%at' -1 2> /dev/null`
             now=`date +%s`
             seconds_since_last_commit=$((now-last_commit))
- 
+
             # Totals
             MINUTES=$((seconds_since_last_commit / 60))
             HOURS=$((seconds_since_last_commit/3600))
-           
+
             # Sub-hours and sub-minutes
             DAYS=$((seconds_since_last_commit / 86400))
             SUB_HOURS=$((HOURS % 24))
             SUB_MINUTES=$((MINUTES % 60))
-            
+
             if [[ -n $(git status -s 2> /dev/null) ]]; then
                 if [ "$MINUTES" -gt 30 ]; then
                     COLOR="$ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG"
@@ -158,7 +166,7 @@ function git_time_since_commit() {
             else
                 COLOR="$ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL"
             fi
- 
+
             if [ "$HOURS" -gt 24 ]; then
                 echo "($COLOR${DAYS}d${SUB_HOURS}h${SUB_MINUTES}m%{$reset_color%})"
             elif [ "$MINUTES" -gt 60 ]; then
@@ -171,14 +179,21 @@ function git_time_since_commit() {
 }
 
 build_rprompt() {
-  if [ "$ZSH_2000_DISABLE_RVM" != 'true' ];then
-    prompt_rvm
+  if [[ "$ZSH_2000_DISABLE_RIGHT_PROMPT" != 'true' ]];then
+    if [[ "$ZSH_2000_DISABLE_GIT_TIME" != 'true' ]];then
+        echo -n "$(git_time_since_commit)"
+    fi
+    if [[ "$ZSH_2000_GIT_PROMPT_LEFT" == 'false' ]];then
+      prompt_git
+    fi
+    if [[ "$ZSH_2000_DISABLE_RVM" != 'true' ]];then
+      prompt_rvm
+    fi
+    if [[ "$ZSH_2000_DISABLE_TIME" != 'true' ]];then
+      prompt_time
+    fi
   fi
-  prompt_time
 }
 
-
 PROMPT='%{%f%b%k%}$(build_prompt) '
-if [ "$ZSH_2000_DISABLE_RIGHT_PROMPT" != 'true' ];then
-  RPROMPT='%{%f%b%k%}$(git_time_since_commit)$(build_rprompt)'
-fi
+RPROMPT='%{%f%b%k%}$(build_rprompt)'
