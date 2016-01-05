@@ -62,3 +62,7 @@ Disable git since last git commit
 Disable current system time
 
     export ZSH_2000_DISABLE_TIME='true'
+
+Move the git status prompt to the right side
+
+    export ZSH_2000_GIT_PROMPT_LEFT='false'

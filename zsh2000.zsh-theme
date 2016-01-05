@@ -61,14 +61,21 @@ prompt_git() {
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null)
     if [[ -n $dirty ]]; then
-      prompt_segment magenta black
+      if [[ "$ZSH_2000_GIT_PROMPT_LEFT" != 'false' ]];then
+        prompt_segment magenta black
+      else
+        prompt_segment_right magenta black
+      fi
     else
-      prompt_segment green black
+      if [[ "$ZSH_2000_GIT_PROMPT_LEFT" != 'false' ]];then
+        prompt_segment green black
+      else
+        prompt_segment_right green black
+      fi
     fi
+    echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty "
     if [[ "$ZSH_2000_DISABLE_GIT_STATUS" != "true" ]];then
-      #echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty"$(git_prompt_status)
-    else
-      echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty"
+      echo -n "$(git_prompt_status)"
     fi
   fi
 }
@@ -110,7 +117,9 @@ build_prompt() {
   fi
   prompt_user_hostname
   prompt_dir
-  prompt_git
+  if [[ "$ZSH_2000_GIT_PROMPT_LEFT" != 'false' ]];then
+    prompt_git
+  fi
   prompt_end
 }
 
@@ -174,6 +183,9 @@ build_rprompt() {
   if [[ "$ZSH_2000_DISABLE_RIGHT_PROMPT" != 'true' ]];then
     if [[ "$ZSH_2000_DISABLE_GIT_TIME" != 'true' ]];then
         echo -n "$(git_time_since_commit)"
+    fi
+    if [[ "$ZSH_2000_GIT_PROMPT_LEFT" == 'false' ]];then
+      prompt_git
     fi
     if [[ "$ZSH_2000_DISABLE_RVM" != 'true' ]];then
       prompt_rvm
