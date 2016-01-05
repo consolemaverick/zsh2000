@@ -58,3 +58,7 @@ Disable RVM prompt
 Disable git since last git commit
 
     export ZSH_2000_DISABLE_GIT_TIME='true'
+
+Disable current system time
+
+    export ZSH_2000_DISABLE_TIME='true'
