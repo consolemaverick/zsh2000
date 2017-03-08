@@ -1,9 +1,9 @@
 ZSH2000
 ======
 
-![alt tag](https://raw.githubusercontent.com/maverick2000/zsh2000/master/demo.png)
+![alt tag](https://raw.githubusercontent.com/maverick9000/zsh2000/master/demo.png)
 
-![alt tag](https://raw.githubusercontent.com/maverick2000/zsh2000/master/demo2.png)
+![alt tag](https://raw.githubusercontent.com/maverick9000/zsh2000/master/demo2.png)
 
 Powerline looking zsh theme with rvm prompt, git status and branch, current time, user, hostname, pwd, exit status, root and background job status.
 
@@ -16,7 +16,7 @@ Install your favorite version of
 
 ###Installation###
 
-    git clone https://github.com/maverick2000/zsh2000.git
+    git clone https://github.com/maverick9000/zsh2000.git
     ln -s zsh2000.zsh-theme ~/.oh-my-zsh/themes/zsh2000.zsh-theme
 
 Modify ~/.zshrc setting
