@@ -9,12 +9,12 @@ Powerline looking zsh theme with rvm prompt, git status and branch, current time
 
 Influenced heavily by [agnoster's theme](https://gist.github.com/3712874) and [jeremyFreeAgent's theme](https://github.com/jeremyFreeAgent/oh-my-zsh-powerline-theme)
 
-###Prerequisites###
+### Prerequisites
 
 Install your favorite version of
 [Powerline-patched fonts](https://github.com/Lokaltog/powerline-fonts)
 
-###Installation###
+### Installation
 
     git clone https://github.com/maverick9000/zsh2000.git
     ln -s zsh2000.zsh-theme ~/.oh-my-zsh/themes/zsh2000.zsh-theme
@@ -23,7 +23,7 @@ Modify ~/.zshrc setting
 
     ZSH_THEME="zsh2000"
 
-###Configuration###
+### Configuration
 
 Place these above this line in your ~/.zshrc:
 
