@@ -17,7 +17,7 @@ Install your favorite version of
 ### Installation
 
     git clone https://github.com/maverick9000/zsh2000.git
-    ln -s zsh2000.zsh-theme ~/.oh-my-zsh/themes/zsh2000.zsh-theme
+    ln -s "$(pwd)/zsh2000.zsh-theme" ~/.oh-my-zsh/themes/zsh2000.zsh-theme
 
 Modify ~/.zshrc setting
 
