@@ -63,7 +63,7 @@ prompt_git() {
     if [[ -n $dirty ]]; then
       prompt_segment magenta black
     else
-      prompt_segment green black
+      prompt_segment "35" black
     fi
     if [ "$ZSH_2000_DISABLE_GIT_STATUS" != "true" ];then
       echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty"$(git_prompt_status)
@@ -74,7 +74,7 @@ prompt_git() {
 }
 
 prompt_dir() {
-  prompt_segment blue white '%~'
+  prompt_segment "75" black '%~'
 }
 
 # Status:
@@ -92,14 +92,84 @@ prompt_status() {
 }
 
 prompt_time() {
-  prompt_segment_right white black '%D{%H:%M:%S} '
+  prompt_segment_right "105" black '%D{%H:%M:%S} '
 }
 
-prompt_rvm() {
-  local rvm_prompt
-  rvm_prompt=`rvm-prompt`
-  if [ "$rvm_prompt" != "" ]; then
-    prompt_segment_right "240" white "$rvm_prompt "
+# prompt_rvm() {
+#   local rvm_prompt
+#   rvm_prompt=`rvm-prompt`
+#   if [ "$rvm_prompt" != "" ]; then
+#     prompt_segment_right "240" white "$rvm_prompt "
+#   fi
+# }
+
+# Segment to display rbenv information
+# https://github.com/rbenv/rbenv#choosing-the-ruby-version
+prompt_rbenv() {
+  if [ $commands[rbenv] ]; then
+    find_and_set_rbenv_verion
+  fi
+}
+
+  # This function is kind of a mess. Unlike rvm, rbenv doesn't have
+  # a cute little rvm-prompt message that displays the ruby version correctly
+  # for rbenv, you have to run `rbenv version-name` to see what version
+  # of ruby is being used.
+
+  # BUT if you do not have the local ruby version (stored in .ruby-version)
+  # installed, `rbenv version-name` raises an error and does not return
+  # the version number you need to install.
+
+  # Additionally, if you're in a directory that doesn't use ruby,
+  # `rbenv version-name` will return the global ruby version.
+  # I think that's misleading. If the directory isn't defining a
+  # ruby version, I don't want to just have the global one displayed.
+
+  # So here's what this function does.
+
+
+  # if ruby version is not installed        --> display local version _in red_
+  # if ruby version != global version &&
+  #    ruby version == local version        --> display local version
+  # if ruby version == global version &&
+  #    there is a local .ruby-version file  --> display global version
+  # if ruby version == global version &&
+  #    there is no local .ruby-version      --> don't display anything
+
+find_and_set_rbenv_verion() {
+  local ruby_global_version="$(rbenv global)"
+
+  # set ruby_local_version_from_file
+  if [ -f ".ruby-version" ]; then                        # use .ruby-version if it exists
+    local ruby_local_version_from_file=$(<.ruby-version)
+  fi
+
+  # set ruby_local_version_from_command
+  if result=$(rbenv version-name 2>&1); then
+    local ruby_local_version_from_command=$result
+  else
+    local ruby_not_installed_error=$result
+  fi
+
+  # set ruby_local_version
+  #
+  # prefer getting version from .ruby-version
+  # over rbenv version-name
+  #
+  if [ $ruby_local_version_from_file ]; then
+    local ruby_local_version=$ruby_local_version_from_file
+  elif [ $ruby_local_version_from_command ]; then
+    local ruby_local_version=$ruby_local_version_from_command
+  else
+    return  # don't display anything if can't find local ruby version
+  fi
+
+  if [ $ruby_not_installed_error ]; then
+    prompt_segment_right "124" black "$ruby_local_version "
+  elif [ $ruby_global_version != $ruby_local_version ]; then
+    prompt_segment_right "035" black "$ruby_local_version "
+  elif [ $ruby_local_version_from_file ]; then
+    prompt_segment_right "035" black "$ruby_local_version "
   fi
 }
 
@@ -118,7 +188,7 @@ ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT="%{$fg[green]%}"
 ZSH_THEME_GIT_TIME_SHORT_COMMIT_MEDIUM="%{$fg[yellow]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG="%{$fg[red]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg[cyan]%}"
- 
+
 #Customized git status, oh-my-zsh currently does not allow render dirty status before branch
 git_custom_status() {
   local cb=$(current_branch)
@@ -126,7 +196,7 @@ git_custom_status() {
     echo "$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_PREFIX$(current_branch)$ZSH_THEME_GIT_PROMPT_SUFFIX"
   fi
 }
- 
+
 # Determine the time since last commit. If branch is clean,
 # use a neutral color, otherwise colors will vary according to time.
 function git_time_since_commit() {
@@ -137,16 +207,16 @@ function git_time_since_commit() {
             last_commit=`git log --pretty=format:'%at' -1 2> /dev/null`
             now=`date +%s`
             seconds_since_last_commit=$((now-last_commit))
- 
+
             # Totals
             MINUTES=$((seconds_since_last_commit / 60))
             HOURS=$((seconds_since_last_commit/3600))
-           
+
             # Sub-hours and sub-minutes
             DAYS=$((seconds_since_last_commit / 86400))
             SUB_HOURS=$((HOURS % 24))
             SUB_MINUTES=$((MINUTES % 60))
-            
+
             if [[ -n $(git status -s 2> /dev/null) ]]; then
                 if [ "$MINUTES" -gt 30 ]; then
                     COLOR="$ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG"
@@ -158,7 +228,7 @@ function git_time_since_commit() {
             else
                 COLOR="$ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL"
             fi
- 
+
             if [ "$HOURS" -gt 24 ]; then
                 echo "($COLOR${DAYS}d${SUB_HOURS}h${SUB_MINUTES}m%{$reset_color%})"
             elif [ "$MINUTES" -gt 60 ]; then
@@ -172,7 +242,7 @@ function git_time_since_commit() {
 
 build_rprompt() {
   if [ "$ZSH_2000_DISABLE_RVM" != 'true' ];then
-    prompt_rvm
+    prompt_rbenv
   fi
   prompt_time
 }
@@ -180,5 +250,8 @@ build_rprompt() {
 
 PROMPT='%{%f%b%k%}$(build_prompt) '
 if [ "$ZSH_2000_DISABLE_RIGHT_PROMPT" != 'true' ];then
-  RPROMPT='%{%f%b%k%}$(git_time_since_commit)$(build_rprompt)'
+  # RPROMPT='%{%f%b%k%}$(git_time_since_commit)$(build_rprompt)'
+  RPROMPT='%{%f%b%k%}$(build_rprompt)'
 fi
+
+
