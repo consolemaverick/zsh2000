@@ -65,10 +65,10 @@ prompt_git() {
     else
       prompt_segment "35" black
     fi
-    if [ "$ZSH_2000_DISABLE_GIT_STATUS" != "true" ];then
-      echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty"$(git_prompt_status)
+    if [ "$ZSH_2022_DISABLE_GIT_STATUS" != "true" ];then
+      echo -n "\ue0a0 ${ref/refs\/heads\//} "$(git_prompt_status)
     else
-      echo -n "\ue0a0 ${ref/refs\/heads\//}$dirty"
+      echo -n "\ue0a0 ${ref/refs\/heads\//} "
     fi
   fi
 }
@@ -174,7 +174,7 @@ find_and_set_rbenv_verion() {
 }
 
 build_prompt() {
-  if [ "$ZSH_2000_DISABLE_STATUS" != 'true' ];then
+  if [ "$ZSH_2022_DISABLE_STATUS" != 'true' ];then
     RETVAL=$?
     prompt_status
   fi
@@ -241,7 +241,7 @@ function git_time_since_commit() {
 }
 
 build_rprompt() {
-  if [ "$ZSH_2000_DISABLE_RVM" != 'true' ];then
+  if [ "$ZSH_2022_DISABLE_RVM" != 'true' ];then
     prompt_rbenv
   fi
   prompt_time
@@ -249,7 +249,7 @@ build_rprompt() {
 
 
 PROMPT='%{%f%b%k%}$(build_prompt) '
-if [ "$ZSH_2000_DISABLE_RIGHT_PROMPT" != 'true' ];then
+if [ "$ZSH_2022_DISABLE_RIGHT_PROMPT" != 'true' ];then
   # RPROMPT='%{%f%b%k%}$(git_time_since_commit)$(build_rprompt)'
   RPROMPT='%{%f%b%k%}$(build_rprompt)'
 fi

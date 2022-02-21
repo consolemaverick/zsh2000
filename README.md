@@ -1,13 +1,13 @@
-ZSH2000
+ZSH2022
 ======
 
-![alt tag](https://raw.githubusercontent.com/maverick9000/zsh2000/master/demo.png)
+Forked from [zsh2000](https://github.com/markhilkert/zsh2022). This theme is designed with Ruby developers in mind. The main difference between this theme and zsh2000 is support for rbenv.
 
-![alt tag](https://raw.githubusercontent.com/maverick9000/zsh2000/master/demo2.png)
+Powerline influenced zsh theme with rvm/rbenv prompt, git status and branch, current time, user, hostname, pwd, exit status, root and background job status.
 
-Powerline looking zsh theme with rvm prompt, git status and branch, current time, user, hostname, pwd, exit status, root and background job status.
+### rbenv support
 
-Influenced heavily by [agnoster's theme](https://gist.github.com/3712874) and [jeremyFreeAgent's theme](https://github.com/jeremyFreeAgent/oh-my-zsh-powerline-theme)
+
 
 ### Prerequisites
 
@@ -16,26 +16,26 @@ Install your favorite version of
 
 ### Installation
 
-    git clone https://github.com/maverick9000/zsh2000.git
-    ln -s zsh2000.zsh-theme ~/.oh-my-zsh/themes/zsh2000.zsh-theme
+    git clone https://github.com/markhilkert/zsh2022.git
+    ln -s zsh2022.zsh-theme ~/.oh-my-zsh/themes/zsh2022.zsh-theme
 
 Modify ~/.zshrc setting
 
-    ZSH_THEME="zsh2000"
+    ZSH_THEME="zsh2022"
 
 ### Configuration
 
 Place these above this line in your ~/.zshrc:
 
-    ZSH_THEME="zsh2000"
+    ZSH_THEME="zsh2022"
 
 Disable the right hand side prompt entirely
 
-    export ZSH_2000_DISABLE_RIGHT_PROMPT='true'
+    export ZSH_2022_DISABLE_RIGHT_PROMPT='true'
 
 Disable user@hostname
 
-    export ZSH_2000_DEFAULT_USER='YOUR_USER_NAME'
+    export ZSH_2022_DEFAULT_USER='YOUR_USER_NAME'
 
 Disable display of
 
@@ -45,12 +45,12 @@ Disable display of
 
 by adding
 
-    export ZSH_2000_DISABLE_STATUS='true'
+    export ZSH_2022_DISABLE_STATUS='true'
 
 Disable git status on top of plain git clean/dirty
 
-    export ZSH_2000_DISABLE_GIT_STATUS='true'
+    export ZSH_2022_DISABLE_GIT_STATUS='true'
 
 Disable RVM prompt
 
-    export ZSH_2000_DISABLE_RVM='true'
+    export ZSH_2022_DISABLE_RVM='true'
